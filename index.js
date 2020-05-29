@@ -13,7 +13,19 @@ const port = process.env.PORT || 3003
 // Middleware init
 app.use(morgan('tiny'))
 app.use(helmet())
-app.use(cors({ origin: 'localhost' }))
+
+var whitelist = ['joshmu.com']
+// origin === undefined check for local development
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || origin === undefined) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+}
+app.use(cors(corsOptions))
 
 // Static files
 app.use(express.static(__dirname + '/static/'))
