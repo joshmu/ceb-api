@@ -23,3 +23,8 @@ module.exports.connect = async () => {
     process.exit(1)
   }
 }
+
+module.exports.getLogs = async () => {
+  await this.connect()
+  return await Log.find({})
+}

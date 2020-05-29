@@ -13,31 +13,13 @@ const port = process.env.PORT || 3003
 // Middleware init
 app.use(morgan('tiny'))
 app.use(helmet())
-
-let whitelist = [
-  `http://localhost:${port}`,
-  'http://127.0.0.1:5500',
-  'https://joshmu.com',
-  'http://joshmu.com',
-  'http://ceb.joshmu.com',
-  'http://crypto.joshmu.com',
-]
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-}
-app.use(cors(corsOptions))
+app.use(cors({ origin: 'localhost' }))
 
 // Static files
 app.use(express.static(__dirname + '/static/'))
 
 app.get('/', (req, res, next) => {
-  console.log('CEB: home page...')
+  db.getLogs().then((data) => res.json(data))
 })
 
 app.listen(port, () => {
