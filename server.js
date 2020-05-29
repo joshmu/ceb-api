@@ -15,10 +15,10 @@ app.use(morgan('tiny'))
 app.use(helmet())
 
 var whitelist = ['joshmu.com']
-// origin === undefined check for local development
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || origin === undefined) {
+    // check !origin for local development
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))

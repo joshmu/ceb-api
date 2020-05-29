@@ -2,9 +2,9 @@
   "name": "ceb-api",
   "version": "1.0.0",
   "description": "Simple API server to retrieve my crypto bot data",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
