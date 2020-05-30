@@ -6,8 +6,8 @@
   "scripts": {
     "start": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["crypto", "server", "trading"],
+  "author": "Josh Mu",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.0.0",
