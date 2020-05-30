@@ -14,7 +14,7 @@ const port = process.env.PORT || 3003
 app.use(morgan('tiny'))
 app.use(helmet())
 
-var whitelist = ['joshmu.com']
+var whitelist = ['joshmu.com', 'mu-ceb-client']
 var corsOptions = {
   origin: function (origin, callback) {
     // check !origin for local development
