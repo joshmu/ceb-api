@@ -23,7 +23,7 @@ module.exports.connect = async () => {
 
 module.exports.getTrimmedLogs = async () => {
   await this.connect()
-  return await Log.find(
+  return Log.find(
     {},
     {
       'btcusd.signals.daily': 1,

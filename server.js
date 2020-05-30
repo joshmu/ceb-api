@@ -1,6 +1,8 @@
 const express = require('express')
 const db = require('./db/db.js')
 
+const production = process.env.NODE_ENV === 'production'
+
 // Middleware
 const morgan = require('morgan')
 const helmet = require('helmet')
@@ -32,9 +34,22 @@ app.use(cors(corsOptions))
 app.use(express.static(__dirname + '/static/'))
 
 app.get('/', (req, res, next) => {
-  db.getTrimmedLogs().then((data) => res.json(data))
+  const timer = preventHerokuTimeout()
+  db.getTrimmedLogs().then((data) => {
+    res.json(data)
+    if (!timer._destroyed) clearTimeout(timer)
+  })
 })
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
+
+const preventHerokuTimeout = (secs = 25) => {
+  // using timeout instead of interval in case we run in to a loop somehow
+  const timer = setTimeout(
+    () => console.log('prevent heroku H12 30s request timeout...'),
+    secs * 1000
+  )
+  return timer
+}
