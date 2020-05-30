@@ -1,10 +1,7 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-const chalk = require('chalk')
-const log = (msg) => {
-  console.log(chalk.magenta(`DB: ${msg}`))
-}
+const log = (msg) => console.log(`DB: ${msg}`)
 
 module.exports.Log = Log = require('./models/logSchema.js')
 
@@ -24,7 +21,17 @@ module.exports.connect = async () => {
   }
 }
 
-module.exports.getLogs = async () => {
+module.exports.getTrimmedLogs = async () => {
   await this.connect()
-  return await Log.find({})
+  return await Log.find(
+    {},
+    {
+      'btcusd.signals.daily': 1,
+      'ethbtc.signals.daily': 1,
+      'ethusd.signals.daily': 1,
+      appTimestamp: 1,
+      balances: 1,
+      order: 1,
+    }
+  )
 }

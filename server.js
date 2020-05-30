@@ -17,9 +17,9 @@ app.use(helmet())
 var whitelist = ['joshmu.com', 'mu-ceb-client', 'localhost', 'null']
 var corsOptions = {
   origin: function (origin, callback) {
-    console.log({origin})
+    console.log({ origin })
     // check !origin for local development
-    if (!origin || whitelist.some(w => origin.includes(w))) {
+    if (!origin || whitelist.some((w) => origin.includes(w))) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -32,7 +32,7 @@ app.use(cors(corsOptions))
 app.use(express.static(__dirname + '/static/'))
 
 app.get('/', (req, res, next) => {
-  db.getLogs().then((data) => res.json(data))
+  db.getTrimmedLogs().then((data) => res.json(data))
 })
 
 app.listen(port, () => {
