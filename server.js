@@ -17,8 +17,10 @@ app.use(helmet())
 var whitelist = ['joshmu.com', 'mu-ceb-client', 'localhost']
 var corsOptions = {
   origin: function (origin, callback) {
+    console.log({origin})
+    const allowed = whitelist.some(w => origin.includes(w))
     // check !origin for local development
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
+    if (allowed || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
