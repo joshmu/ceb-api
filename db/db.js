@@ -22,7 +22,7 @@ module.exports.connect = async () => {
 }
 
 module.exports.getTrimmedLogs = async () => {
-  await this.connect()
+  console.log('db.getTrimmedLogs')
   return Log.find(
     {},
     {
