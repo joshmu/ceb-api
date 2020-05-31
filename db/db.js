@@ -24,7 +24,7 @@ module.exports.connect = async () => {
 module.exports.getTrimmedLogs = async () => {
   console.log('db.getTrimmedLogs')
   return Log.find(
-    {},
+    { balances: { $exists: true } },
     {
       'btcusd.signals.daily': 1,
       'ethbtc.signals.daily': 1,
@@ -33,5 +33,5 @@ module.exports.getTrimmedLogs = async () => {
       balances: 1,
       order: 1,
     }
-  )
+  ).sort({ appTimestamp: 'desc' })
 }
