@@ -33,5 +33,5 @@ module.exports.getTrimmedLogs = async () => {
       balances: 1,
       order: 1,
     }
-  ).sort({ appTimestamp: 'desc' })
+  ).sort({ appTimestamp: 'asc' })
 }
