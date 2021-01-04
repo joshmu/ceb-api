@@ -18,12 +18,19 @@ const cors = require('cors')
   app.use(morgan('tiny'))
   app.use(helmet())
 
-  var whitelist = ['joshmu.com', 'mu-ceb-client', 'localhost', 'null']
-  var corsOptions = {
-    origin: function (origin, callback) {
+  const whitelist = [
+    'joshmu',
+    'crypto',
+    'ceb',
+    'mu-ceb-client',
+    'localhost',
+    'null',
+  ]
+  const corsOptions = {
+    origin: function(origin, callback) {
       console.log({ origin })
       // check !origin for local development
-      if (!origin || whitelist.some((w) => origin.includes(w))) {
+      if (!origin || whitelist.some(w => origin.includes(w))) {
         callback(null, true)
       } else {
         callback(new Error('Not allowed by CORS'))
@@ -36,7 +43,7 @@ const cors = require('cors')
   app.use(express.static(__dirname + '/static/'))
 
   app.get('/', (req, res, next) => {
-    db.getTrimmedLogs().then((data) => res.json(data))
+    db.getTrimmedLogs().then(data => res.json(data))
   })
 
   app.listen(port, () => {
