@@ -1,9 +1,11 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
+const fs = require('fs')
 
-const log = (msg) => console.log(`DB: ${msg}`)
+const log = msg => console.log(`DB: ${msg}`)
 
-module.exports.Log = Log = require('./models/logSchema.js')
+const Log = require('./models/logSchema.js')
+module.exports.Log = Log
 
 module.exports.connect = async () => {
   log(`attempting to connect to db...`)
@@ -36,5 +38,7 @@ module.exports.getTrimmedLogs = async () => {
       balances: 1,
       order: 1,
     }
-  ).sort({ appTimestamp: 'asc' })
+  )
+    .sort({ appTimestamp: 'asc' })
+    .lean()
 }
